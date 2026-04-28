@@ -1,0 +1,12 @@
+{
+  "actorSpecification": 1,
+  "name": "leetcode-graphql-data-extractor",
+  "title": "LeetCode GraphQL Data Extractor",
+  "description": "Extracts detailed data from LeetCode using GraphQL operations, capturing profiles, submissions, question metadata, and more.",
+  "version": "1.0",
+  "buildTag": "latest",
+  "environmentVariables": {
+    "APIFY_DEFAULT_DATASET_ID": "default",
+    "APIFY_DEFAULT_KEY_VALUE_STORE_ID": "default"
+  }
+}

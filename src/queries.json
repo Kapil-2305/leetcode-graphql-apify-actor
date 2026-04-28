@@ -1,0 +1,882 @@
+{
+  "count": 75,
+  "operations": [
+    {
+      "source_path": "feed/feed.graphql",
+      "operation_type": "query",
+      "operation_name": "globalData",
+      "query": "query globalData {\n  feature {\n    questionTranslation\n    subscription\n    signUp\n    discuss\n    mockInterview\n    contest\n    store\n    chinaProblemDiscuss\n    socialProviders\n    studentFooter\n    enableChannels\n    dangerZone\n    enableSharedWorker\n    enableRecaptchaV3\n    enableDebugger\n    enableDebuggerPremium\n    enableAutocomplete\n    enableAutocompletePremium\n    enableAllQuestionsRaw\n    autocompleteLanguages\n    enableIndiaPricing\n    enableReferralDiscount\n    maxTimeTravelTicketCount\n    enableStoreShippingForm\n    enableCodingChallengeV2\n    __typename\n  }\n  streakCounter {\n    streakCount\n    daysSkipped\n    currentDayCompleted\n    __typename\n  }\n  currentTimestamp\n  userStatus {\n    isSignedIn\n    isAdmin\n    isStaff\n    isSuperuser\n    isMockUser\n    isTranslator\n    isPremium\n    isVerified\n    checkedInToday\n    username\n    realName\n    avatar\n    optedIn\n    requestRegion\n    region\n    activeSessionId\n    permissions\n    notificationStatus {\n      lastModified\n      numUnread\n      __typename\n    }\n    completedFeatureGuides\n    __typename\n  }\n  siteRegion\n  chinaHost\n  websocketUrl\n  recaptchaKey\n  recaptchaKeyV2\n  sitewideAnnouncement\n  userCountryCode\n}",
+      "variables_examples": []
+    },
+    {
+      "source_path": "feed/feed.graphql",
+      "operation_type": "mutation",
+      "operation_name": "checkin",
+      "query": "mutation checkin {\n  checkin {\n    checkedIn\n    ok\n    error\n    __typename\n  }\n}",
+      "variables_examples": []
+    },
+    {
+      "source_path": "feed/feed.graphql",
+      "operation_type": "query",
+      "operation_name": "codingChallengeMedal",
+      "query": "query codingChallengeMedal($year: Int!, $month: Int!) {\n  dailyChallengeMedal(year: $year, month: $month) {\n    name\n    config {\n      icon\n      __typename\n    }\n    __typename\n  }\n  activeDailyCodingChallengeQuestion {\n    link\n    __typename\n  }\n}",
+      "variables_examples": [
+        {
+          "year": 2023,
+          "month": 7
+        }
+      ]
+    },
+    {
+      "source_path": "feed/feed.graphql",
+      "operation_type": "query",
+      "operation_name": "trendingDiscuss",
+      "query": "query trendingDiscuss($first: Int!) {\n  cachedTrendingCategoryTopics(first: $first) {\n    id\n    title\n    post {\n      id\n      creationDate\n      contentPreview\n      author {\n        username\n        isActive\n        profile {\n          userAvatar\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}",
+      "variables_examples": [
+        {
+          "first": 10
+        }
+      ]
+    },
+    {
+      "source_path": "feed/feed.graphql",
+      "operation_type": "query",
+      "operation_name": "getDidCompleteUpc",
+      "query": "query getDidCompleteUpc {\n  didCompleteUpc\n  user {\n    joinedTimestamp\n    __typename\n  }\n}",
+      "variables_examples": []
+    },
+    {
+      "source_path": "feed/feed.graphql",
+      "operation_type": "query",
+      "operation_name": "upcomingContests",
+      "query": "query upcomingContests {\n  upcomingContests {\n    title\n    titleSlug\n    startTime\n    duration\n    __typename\n  }\n}",
+      "variables_examples": []
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "globalData",
+      "query": "query globalData {\n  userStatus {\n    userId\n    isSignedIn\n    isMockUser\n    isPremium\n    isVerified\n    username\n    avatar\n    isAdmin\n    isSuperuser\n    permissions\n    isTranslator\n    activeSessionId\n    checkedInToday\n    notificationStatus {\n      lastModified\n      numUnread\n    }\n  }\n}",
+      "variables_examples": []
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "studyPlanV2RecentCompletedProgress",
+      "query": "query studyPlanV2RecentCompletedProgress($planSlug: String!) {\n  studyPlanV2RecentCompletedProgress(planSlug: $planSlug) {\n    id\n    status\n  }\n}",
+      "variables_examples": [
+        {
+          "planSlug": ""
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "tabsStatus",
+      "query": "query tabsStatus($titleSlug: String!) {\n  questionTopicsList(questionSlug: $titleSlug) {\n    totalNum\n  }\n  questionDiscussionTopic(questionSlug: $titleSlug) {\n    topLevelCommentCount\n  }\n}",
+      "variables_examples": [
+        {
+          "titleSlug": "two-sum"
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "questionTitle",
+      "query": "query questionTitle($titleSlug: String!) {\n  question(titleSlug: $titleSlug) {\n    questionId\n    questionFrontendId\n    title\n    titleSlug\n    isPaidOnly\n    difficulty\n    likes\n    dislikes\n  }\n}",
+      "variables_examples": [
+        {
+          "titleSlug": "two-sum"
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "premiumQuestion",
+      "query": "query premiumQuestion($titleSlug: String!) {\n  question(titleSlug: $titleSlug) {\n    isPaidOnly\n  }\n}",
+      "variables_examples": [
+        {
+          "titleSlug": "two-sum"
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "SimilarQuestions",
+      "query": "query SimilarQuestions($titleSlug: String!) {\n  question(titleSlug: $titleSlug) {\n    similarQuestionList {\n      difficulty\n      titleSlug\n      title\n      translatedTitle\n      isPaidOnly\n    }\n  }\n}",
+      "variables_examples": [
+        {
+          "titleSlug": "two-sum"
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "singleQuestionTopicTags",
+      "query": "query singleQuestionTopicTags($titleSlug: String!) {\n  question(titleSlug: $titleSlug) {\n    topicTags {\n      name\n      slug\n    }\n  }\n}",
+      "variables_examples": [
+        {
+          "titleSlug": "two-sum"
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "userCanSeeQuestion",
+      "query": "query userCanSeeQuestion($titleSlug: String!) {\n  question(titleSlug: $titleSlug) {\n    canSeeQuestion\n  }\n}",
+      "variables_examples": [
+        {
+          "titleSlug": "two-sum"
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "consolePanelConfig",
+      "query": "query consolePanelConfig($titleSlug: String!) {\n  question(titleSlug: $titleSlug) {\n    questionId\n    questionFrontendId\n    questionTitle\n    enableDebugger\n    enableRunCode\n    enableSubmit\n    enableTestMode\n    exampleTestcaseList\n    metaData\n  }\n}",
+      "variables_examples": [
+        {
+          "titleSlug": "two-sum"
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "questionEditorData",
+      "query": "query questionEditorData($titleSlug: String!) {\n  question(titleSlug: $titleSlug) {\n    questionId\n    questionFrontendId\n    codeSnippets {\n      lang\n      langSlug\n      code\n    }\n    envInfo\n    enableRunCode\n  }\n}",
+      "variables_examples": [
+        {
+          "titleSlug": "two-sum"
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "languageList",
+      "query": "query languageList {\n  languageList {\n    id\n    name\n  }\n}",
+      "variables_examples": []
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "SurveyV2",
+      "query": "query SurveyV2($surveySlug: String!) {\n  surveyV2(surveySlug: $surveySlug) {\n    showSurvey\n    surveyJson\n    leetcoinAmount\n  }\n}",
+      "variables_examples": [
+        {
+          "surveySlug": "javascript_problem_survey"
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "qdFeatureGuide",
+      "query": "query qdFeatureGuide {\n  userStatus {\n    completedFeatureGuides\n    isSignedIn\n  }\n}",
+      "variables_examples": []
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "annualReport",
+      "query": "query annualReport {\n  userStatus {\n    annualReport {\n      showPopup\n      content\n      badge {\n        displayName\n        medal {\n          slug\n          config {\n            iconGif\n          }\n        }\n      }\n    }\n  }\n}",
+      "variables_examples": []
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "questionContent",
+      "query": "query questionContent($titleSlug: String!) {\n  question(titleSlug: $titleSlug) {\n    content\n    mysqlSchemas\n  }\n}",
+      "variables_examples": [
+        {
+          "titleSlug": "two-sum"
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "qdChallengeQuestion",
+      "query": "query qdChallengeQuestion($titleSlug: String!) {\n  question(titleSlug: $titleSlug) {\n    challengeQuestion {\n      id\n      date\n      incompleteChallengeCount\n      streakCount\n      type\n    }\n  }\n}",
+      "variables_examples": [
+        {
+          "titleSlug": "two-sum"
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "learningContextName",
+      "query": "query learningContextName($currentQuestionSlug: String!, $envId: String, $envType: String) {\n  learningContextV2(\n    currentQuestionSlug: $currentQuestionSlug\n    envId: $envId\n    envType: $envType\n    needQuestion: false\n  ) {\n    name\n  }\n}",
+      "variables_examples": [
+        {
+          "currentQuestionSlug": "two-sum",
+          "filters": {},
+          "envId": "",
+          "envType": "problem-list"
+        },
+        {
+          "envType": "",
+          "envId": "",
+          "currentQuestionSlug": "two-sum"
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "getStreakCounter",
+      "query": "query getStreakCounter {\n  streakCounter {\n    streakCount\n    daysSkipped\n    currentDayCompleted\n  }\n}",
+      "variables_examples": []
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "currentTimestamp",
+      "query": "query currentTimestamp {\n  currentTimestamp\n}",
+      "variables_examples": []
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "questionOfToday",
+      "query": "query questionOfToday {\n  activeDailyCodingChallengeQuestion {\n    date\n    userStatus\n    link\n    question {\n      acRate\n      difficulty\n      freqBar\n      frontendQuestionId: questionFrontendId\n      isFavor\n      paidOnly: isPaidOnly\n      status\n      title\n      titleSlug\n      hasVideoSolution\n      hasSolution\n      topicTags {\n        name\n        id\n        slug\n      }\n    }\n  }\n}",
+      "variables_examples": []
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "questionHints",
+      "query": "query questionHints($titleSlug: String!) {\n  question(titleSlug: $titleSlug) {\n    hints\n  }\n}",
+      "variables_examples": [
+        {
+          "titleSlug": "two-sum"
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "userQuestionStatus",
+      "query": "query userQuestionStatus($titleSlug: String!) {\n  question(titleSlug: $titleSlug) {\n    status\n  }\n}",
+      "variables_examples": [
+        {
+          "titleSlug": "two-sum"
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "userQuestionLike",
+      "query": "query userQuestionLike($titleSlug: String!) {\n  question(titleSlug: $titleSlug) {\n    isLiked\n  }\n}",
+      "variables_examples": [
+        {
+          "titleSlug": "two-sum"
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "userFavorites",
+      "query": "query userFavorites {\n  favoritesLists {\n    allFavorites {\n      idHash\n      name\n      isPublicFavorite\n      questions {\n        titleSlug\n      }\n    }\n  }\n}",
+      "variables_examples": []
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "questionStats",
+      "query": "query questionStats($titleSlug: String!) {\n  question(titleSlug: $titleSlug) {\n    stats\n  }\n}",
+      "variables_examples": [
+        {
+          "titleSlug": "two-sum"
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "userQuestionAdminUrls",
+      "query": "query userQuestionAdminUrls($titleSlug: String!) {\n  question(titleSlug: $titleSlug) {\n    libraryUrl\n    adminUrl\n  }\n}",
+      "variables_examples": [
+        {
+          "titleSlug": "two-sum"
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "questionCompanyStats",
+      "query": "query questionCompanyStats($titleSlug: String!) {\n  question(titleSlug: $titleSlug) {\n    companyTagStats\n  }\n}",
+      "variables_examples": [
+        {
+          "titleSlug": "two-sum"
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "discussionTopic",
+      "query": "query discussionTopic($questionSlug: String!) {\n  questionDiscussionTopic(questionSlug: $questionSlug) {\n    id\n    commentCount\n    topLevelCommentCount\n  }\n}",
+      "variables_examples": [
+        {
+          "questionSlug": "two-sum"
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "syncedCode",
+      "query": "query syncedCode($questionId: Int!, $lang: Int!) {\n  syncedCode(questionId: $questionId, lang: $lang) {\n    timestamp\n    code\n  }\n}",
+      "variables_examples": [
+        {
+          "lang": 11,
+          "questionId": 34
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "enableAiHelper",
+      "query": "query enableAiHelper {\n  feature {\n    enableAiHelper\n  }\n}",
+      "variables_examples": []
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "debuggerLanguageFeatures",
+      "query": "query debuggerLanguageFeatures {\n  debuggerLanguageFeatures {\n    lang {\n      name\n    }\n    supportsExpressions\n    supportsDisablingBreakpoints\n    supportsDebugging\n  }\n}",
+      "variables_examples": []
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "editorialMeta",
+      "query": "query editorialMeta($titleSlug: String!) {\n  question(titleSlug: $titleSlug) {\n    solution {\n      paidOnly\n      hasVideoSolution\n      canSeeDetail\n    }\n  }\n}",
+      "variables_examples": [
+        {
+          "titleSlug": "two-sum"
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "hasOfficialSolution",
+      "query": "query hasOfficialSolution($titleSlug: String!) {\n  question(titleSlug: $titleSlug) {\n    solution {\n      id\n    }\n  }\n}",
+      "variables_examples": [
+        {
+          "titleSlug": "two-sum"
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "codingChallengeMedal",
+      "query": "query codingChallengeMedal($year: Int!, $month: Int!) {\n  dailyChallengeMedal(year: $year, month: $month) {\n    name\n    config {\n      icon\n    }\n  }\n}",
+      "variables_examples": [
+        {
+          "year": 2023,
+          "month": 7
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "submissionList",
+      "query": "query submissionList($offset: Int!, $limit: Int!, $lastKey: String, $questionSlug: String!, $lang: Int, $status: Int) {\n  questionSubmissionList(\n    offset: $offset\n    limit: $limit\n    lastKey: $lastKey\n    questionSlug: $questionSlug\n    lang: $lang\n    status: $status\n  ) {\n    lastKey\n    hasNext\n    submissions {\n      id\n      title\n      titleSlug\n      status\n      statusDisplay\n      lang\n      langName\n      runtime\n      timestamp\n      url\n      isPending\n      memory\n      hasNotes\n      notes\n    }\n  }\n}",
+      "variables_examples": [
+        {
+          "questionSlug": "two-sum",
+          "offset": 0,
+          "limit": 20,
+          "lastKey": null
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "submissionFilterTypes",
+      "query": "query submissionFilterTypes {\n  submittableLanguageList {\n    id\n    verboseName\n  }\n  statusList {\n    id\n    name\n  }\n}",
+      "variables_examples": []
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "questionNote",
+      "query": "query questionNote($titleSlug: String!) {\n  question(titleSlug: $titleSlug) {\n    questionId\n    note\n  }\n}",
+      "variables_examples": [
+        {
+          "titleSlug": "two-sum"
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "solutionTags",
+      "query": "query solutionTags($questionSlug: String!) {\n  solutionTopicTags(questionSlug: $questionSlug) {\n    name\n    slug\n    count\n  }\n  solutionLanguageTags(questionSlug: $questionSlug) {\n    name\n    slug\n    count\n  }\n}",
+      "variables_examples": [
+        {
+          "questionSlug": "two-sum"
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "communitySolutions",
+      "query": "query communitySolutions($questionSlug: String!, $skip: Int!, $first: Int!, $query: String, $orderBy: TopicSortingOption, $languageTags: [String!], $topicTags: [String!]) {\n  questionSolutions(\n    filters: {questionSlug: $questionSlug, skip: $skip, first: $first, query: $query, orderBy: $orderBy, languageTags: $languageTags, topicTags: $topicTags}\n  ) {\n    hasDirectResults\n    totalNum\n    solutions {\n      id\n      title\n      commentCount\n      topLevelCommentCount\n      viewCount\n      pinned\n      isFavorite\n      solutionTags {\n        name\n        slug\n      }\n      post {\n        id\n        status\n        voteCount\n        creationDate\n        isHidden\n        author {\n          username\n          isActive\n          nameColor\n          activeBadge {\n            displayName\n            icon\n          }\n          profile {\n            userAvatar\n            reputation\n          }\n        }\n      }\n      searchMeta {\n        content\n        contentType\n        commentAuthor {\n          username\n        }\n        replyAuthor {\n          username\n        }\n        highlights\n      }\n    }\n  }\n}",
+      "variables_examples": [
+        {
+          "query": "",
+          "languageTags": [],
+          "topicTags": [],
+          "questionSlug": "two-sum",
+          "skip": 30,
+          "first": 15,
+          "orderBy": "hot"
+        },
+        {
+          "query": "",
+          "languageTags": [
+            "python3"
+          ],
+          "topicTags": [
+            "binary-search"
+          ],
+          "questionSlug": "two-sum",
+          "skip": 15,
+          "first": 15,
+          "orderBy": "hot"
+        },
+        {
+          "query": "",
+          "languageTags": [],
+          "topicTags": [],
+          "questionSlug": "two-sum",
+          "skip": 15,
+          "first": 15,
+          "orderBy": "hot"
+        },
+        {
+          "query": "",
+          "languageTags": [],
+          "topicTags": [
+            "binary-search"
+          ],
+          "questionSlug": "two-sum",
+          "skip": 0,
+          "first": 15,
+          "orderBy": "hot"
+        },
+        {
+          "query": "",
+          "languageTags": [],
+          "topicTags": [],
+          "questionSlug": "two-sum",
+          "skip": 0,
+          "first": 15,
+          "orderBy": "hot"
+        },
+        {
+          "query": "",
+          "languageTags": [
+            "python3"
+          ],
+          "topicTags": [
+            "binary-search"
+          ],
+          "questionSlug": "two-sum",
+          "skip": 0,
+          "first": 15,
+          "orderBy": "hot"
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "officialSolution",
+      "query": "query officialSolution($titleSlug: String!) {\n  question(titleSlug: $titleSlug) {\n    solution {\n      id\n      title\n      content\n      contentTypeId\n      paidOnly\n      hasVideoSolution\n      paidOnlyVideo\n      canSeeDetail\n      rating {\n        count\n        average\n        userRating {\n          score\n        }\n      }\n      topic {\n        id\n        commentCount\n        topLevelCommentCount\n        viewCount\n        subscribed\n        solutionTags {\n          name\n          slug\n        }\n        post {\n          id\n          status\n          creationDate\n          author {\n            username\n            isActive\n            profile {\n              userAvatar\n              reputation\n            }\n          }\n        }\n      }\n    }\n  }\n}",
+      "variables_examples": [
+        {
+          "titleSlug": "two-sum"
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "learningContext",
+      "query": "query learningContext($currentQuestionSlug: String!, $categorySlug: String, $envId: String, $envType: String, $filters: QuestionListFilterInput) {\n  learningContextV2(\n    currentQuestionSlug: $currentQuestionSlug\n    categorySlug: $categorySlug\n    envId: $envId\n    envType: $envType\n    filters: $filters\n  ) {\n    name\n    backLink\n    nextQuestion {\n      difficulty\n      title\n      titleSlug\n      questionFrontendId\n    }\n    previousQuestion {\n      difficulty\n      title\n      titleSlug\n      questionFrontendId\n    }\n  }\n}",
+      "variables_examples": [
+        {
+          "currentQuestionSlug": "two-sum",
+          "filters": {},
+          "envId": "",
+          "envType": "problem-list"
+        },
+        {
+          "envType": "",
+          "envId": "",
+          "currentQuestionSlug": "two-sum"
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "randomPanelQuestion",
+      "query": "query randomPanelQuestion($currentQuestionSlug: String!, $categorySlug: String, $envId: String, $envType: String, $filters: QuestionListFilterInput) {\n  randomPanelQuestion(\n    currentQuestionSlug: $currentQuestionSlug\n    categorySlug: $categorySlug\n    envId: $envId\n    envType: $envType\n    filters: $filters\n  )\n}",
+      "variables_examples": [
+        {
+          "currentQuestionSlug": "two-sum",
+          "filters": {},
+          "envId": "",
+          "envType": "problem-list"
+        },
+        {
+          "envType": "",
+          "envId": "",
+          "currentQuestionSlug": "two-sum"
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "panelQuestionList",
+      "query": "query panelQuestionList($currentQuestionSlug: String!, $categorySlug: String, $envId: String, $envType: String, $filters: QuestionListFilterInput) {\n  panelQuestionList(\n    currentQuestionSlug: $currentQuestionSlug\n    categorySlug: $categorySlug\n    envId: $envId\n    envType: $envType\n    filters: $filters\n  ) {\n    hasViewPermission\n    panelName\n    finishedLength\n    totalLength\n    questions {\n      difficulty\n      id\n      paidOnly\n      questionFrontendId\n      status\n      title\n      titleSlug\n      topicTags {\n        name\n        slug\n      }\n    }\n  }\n}",
+      "variables_examples": [
+        {
+          "currentQuestionSlug": "two-sum",
+          "filters": {},
+          "envId": "",
+          "envType": "problem-list"
+        },
+        {
+          "envType": "",
+          "envId": "",
+          "currentQuestionSlug": "two-sum"
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "mutation",
+      "operation_name": "updateSyncedCode",
+      "query": "mutation updateSyncedCode($code: String!, $lang: Int!, $questionId: Int!) {\n  updateSyncedCode(code: $code, lang: $lang, questionId: $questionId) {\n    ok\n  }\n}",
+      "variables_examples": [
+        {
+          "code": "class Solution:\n    def searchRange(self, nums: List[int], target: int) -> List[int]:\n        return []",
+          "lang": 11,
+          "questionId": 34
+        },
+        {
+          "code": "class Solution:\n    def searchRange(self, nums: List[int], target: int) -> List[int]:\n        return [1,2]",
+          "lang": 11,
+          "questionId": 34
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "questionSubmissionList",
+      "query": "query questionSubmissionList($questionSlug: String!, $lang: Int, $withNote: Boolean, $limit: Int, $offset: Int, $status: Int) {\n  questionSubmissionList(\n    questionSlug: $questionSlug\n    offset: $offset\n    limit: $limit\n    lang: $lang\n    withNotes: $withNote\n    status: $status\n  ) {\n    lastKey\n    hasNext\n    submissions {\n      runtime\n      memory\n      timestamp\n      status\n      statusDisplay\n      lang\n      langName\n      timestamp\n      notes\n      id\n      hasNotes\n      topicTags {\n        id\n        name\n        slug\n        translatedName\n      }\n    }\n  }\n}",
+      "variables_examples": [
+        {
+          "questionSlug": "two-sum",
+          "limit": 10,
+          "offset": 0,
+          "lang": 11,
+          "withNote": true,
+          "status": 10
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "submissionDetails",
+      "query": "query submissionDetails($submissionId: Int!) {\n  submissionDetails(submissionId: $submissionId) {\n    runtime\n    runtimeDisplay\n    runtimePercentile\n    runtimeDistribution\n    memory\n    memoryDisplay\n    memoryPercentile\n    memoryDistribution\n    code\n    timestamp\n    statusCode\n    user {\n      username\n      profile {\n        realName\n        userAvatar\n      }\n    }\n    lang {\n      name\n      verboseName\n    }\n    question {\n      questionId\n    }\n    notes\n    topicTags {\n      tagId\n      slug\n      name\n    }\n    runtimeError\n    compileError\n    lastTestcase\n  }\n}",
+      "variables_examples": [
+        {
+          "submissionId": 989723806
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "communitySolution",
+      "query": "query communitySolution($topicId: Int!) {\n  topic(id: $topicId) {\n    id\n    viewCount\n    topLevelCommentCount\n    subscribed\n    title\n    pinned\n    solutionTags {\n      name\n      slug\n    }\n    hideFromTrending\n    commentCount\n    isFavorite\n    post {\n      id\n      voteCount\n      voteStatus\n      content\n      updationDate\n      creationDate\n      status\n      isHidden\n      author {\n        isDiscussAdmin\n        isDiscussStaff\n        username\n        nameColor\n        activeBadge {\n          displayName\n          icon\n        }\n        profile {\n          userAvatar\n          reputation\n        }\n        isActive\n      }\n      authorIsModerator\n      isOwnPost\n    }\n  }\n}",
+      "variables_examples": [
+        {
+          "topicId": 3678229
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "solutionArticleInformation",
+      "query": "query solutionArticleInformation($topicId: Int!) {\n  topic(id: $topicId) {\n    title\n    post {\n      author {\n        username\n      }\n    }\n  }\n}",
+      "variables_examples": [
+        {
+          "topicId": 3678229
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "prevNextSolution",
+      "query": "query prevNextSolution($topicId: Int!, $questionSlug: String!, $skip: Int!, $first: Int!, $query: String, $orderBy: TopicSortingOption, $languageTags: [String!], $topicTags: [String!]) {\n  prevSolution(\n    topicId: $topicId\n    filters: {questionSlug: $questionSlug, first: $first, skip: $skip, orderBy: $orderBy, query: $query, languageTags: $languageTags, topicTags: $topicTags}\n  ) {\n    id\n    title\n  }\n  nextSolution(\n    topicId: $topicId\n    filters: {questionSlug: $questionSlug, first: $first, skip: $skip, orderBy: $orderBy, query: $query, languageTags: $languageTags, topicTags: $topicTags}\n  ) {\n    id\n    title\n  }\n}",
+      "variables_examples": [
+        {
+          "query": "",
+          "languageTags": [],
+          "topicTags": [],
+          "topicId": 3678229,
+          "topicSlug": "",
+          "questionSlug": "two-sum",
+          "skip": 0,
+          "first": 15,
+          "orderBy": "hot"
+        }
+      ]
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "intentionTags",
+      "query": "query intentionTags {\n  intentionTags {\n    name\n    slug\n  }\n}",
+      "variables_examples": []
+    },
+    {
+      "source_path": "problem_solve_page/problem_solve_page.graphql",
+      "operation_type": "query",
+      "operation_name": "questionDiscussComments",
+      "query": "query questionDiscussComments($topicId: Int!, $orderBy: String = \"newest_to_oldest\", $pageNo: Int = 1, $numPerPage: Int = 10) {\n  topicComments(\n    topicId: $topicId\n    orderBy: $orderBy\n    pageNo: $pageNo\n    numPerPage: $numPerPage\n  ) {\n    data {\n      id\n      pinned\n      pinnedBy {\n        username\n      }\n      post {\n        ...DiscussPost\n      }\n      intentionTag {\n        slug\n      }\n      numChildren\n    }\n    totalNum\n  }\n}\n    \n    fragment DiscussPost on PostNode {\n  id\n  voteCount\n  voteStatus\n  content\n  updationDate\n  creationDate\n  status\n  isHidden\n  coinRewards {\n    id\n    score\n    description\n    date\n  }\n  author {\n    isDiscussAdmin\n    isDiscussStaff\n    username\n    nameColor\n    activeBadge {\n      displayName\n      icon\n    }\n    profile {\n      userAvatar\n      reputation\n    }\n    isActive\n  }\n  authorIsModerator\n  isOwnPost\n}",
+      "variables_examples": [
+        {
+          "topicId": 3678229,
+          "pageNo": 1,
+          "numPerPage": 10,
+          "orderBy": "best"
+        }
+      ]
+    },
+    {
+      "source_path": "problemset_page/problemset_page.graphql",
+      "operation_type": "query",
+      "operation_name": "siteAnnouncements",
+      "query": "query siteAnnouncements {\n  siteAnnouncements {\n    title\n    content\n    blacklistUrls\n    whitelistUrls\n    navbarItem\n  }\n}",
+      "variables_examples": []
+    },
+    {
+      "source_path": "problemset_page/problemset_page.graphql",
+      "operation_type": "query",
+      "operation_name": "GetProblemSetStudyPlanAds",
+      "query": "query GetProblemSetStudyPlanAds {\n  studyPlansV2AdQuestionPage {\n    cover\n    highlight\n    name\n    onGoing\n    premiumOnly\n    questionNum\n    slug\n  }\n}",
+      "variables_examples": []
+    },
+    {
+      "source_path": "problemset_page/problemset_page.graphql",
+      "operation_type": "query",
+      "operation_name": "problemsetQuestionList",
+      "query": "query problemsetQuestionList($categorySlug: String, $limit: Int, $skip: Int, $filters: QuestionListFilterInput) {\n  problemsetQuestionList: questionList(\n    categorySlug: $categorySlug\n    limit: $limit\n    skip: $skip\n    filters: $filters\n  ) {\n    total: totalNum\n    questions: data {\n      acRate\n      difficulty\n      freqBar\n      frontendQuestionId: questionFrontendId\n      isFavor\n      paidOnly: isPaidOnly\n      status\n      title\n      titleSlug\n      topicTags {\n        name\n        id\n        slug\n      }\n      hasSolution\n      hasVideoSolution\n    }\n  }\n}",
+      "variables_examples": [
+        {
+          "categorySlug": "",
+          "skip": 0,
+          "limit": 50,
+          "filters": {}
+        }
+      ]
+    },
+    {
+      "source_path": "problemset_page/problemset_page.graphql",
+      "operation_type": "query",
+      "operation_name": "GetMyStudyPlan",
+      "query": "query GetMyStudyPlan($progressType: PlanUserProgressTypeEnum!, $offset: Int!, $limit: Int!) {\n  studyPlanV2UserProgresses(\n    progressType: $progressType\n    offset: $offset\n    limit: $limit\n  ) {\n    hasMore\n    total\n    planUserProgresses {\n      nextQuestionInfo {\n        inPremiumSubgroup\n        nextQuestion {\n          id\n          questionFrontendId\n          title\n          titleSlug\n          translatedTitle\n        }\n      }\n      quittedAt\n      startedAt\n      plan {\n        questionNum\n        slug\n        premiumOnly\n        name\n        onGoing\n        highlight\n        cover\n      }\n      latestSubmissionAt\n      id\n      allCompletedAt\n      finishedQuestionNum\n    }\n  }\n}",
+      "variables_examples": [
+        {
+          "offset": 0,
+          "limit": 3,
+          "progressType": "ON_GOING"
+        }
+      ]
+    },
+    {
+      "source_path": "problemset_page/problemset_page.graphql",
+      "operation_type": "query",
+      "operation_name": "dailyCodingQuestionRecords",
+      "query": "query dailyCodingQuestionRecords($year: Int!, $month: Int!) {\n  dailyCodingChallengeV2(year: $year, month: $month) {\n    challenges {\n      date\n      userStatus\n      link\n      question {\n        questionFrontendId\n        title\n        titleSlug\n      }\n    }\n    weeklyChallenges {\n      date\n      userStatus\n      link\n      question {\n        questionFrontendId\n        title\n        titleSlug\n      }\n    }\n  }\n}",
+      "variables_examples": [
+        {
+          "year": 2023,
+          "month": 7
+        }
+      ]
+    },
+    {
+      "source_path": "problemset_page/problemset_page.graphql",
+      "operation_type": "query",
+      "operation_name": "upcOnboardingStatus",
+      "query": "query upcOnboardingStatus {\n  didCompleteUpc\n  user {\n    joinedTimestamp\n  }\n}",
+      "variables_examples": []
+    },
+    {
+      "source_path": "problemset_page/problemset_page.graphql",
+      "operation_type": "query",
+      "operation_name": "timeTravelTicketInfo",
+      "query": "query timeTravelTicketInfo {\n  validTimeTravelTicketCount\n  redeemedTimeTravelTicketCount\n}",
+      "variables_examples": []
+    },
+    {
+      "source_path": "problemset_page/problemset_page.graphql",
+      "operation_type": "query",
+      "operation_name": "userSessionProgress",
+      "query": "query userSessionProgress($username: String!) {\n  allQuestionsCount {\n    difficulty\n    count\n  }\n  matchedUser(username: $username) {\n    submitStats {\n      acSubmissionNum {\n        difficulty\n        count\n        submissions\n      }\n      totalSubmissionNum {\n        difficulty\n        count\n        submissions\n      }\n    }\n  }\n}",
+      "variables_examples": [
+        {
+          "username": "user8162l"
+        }
+      ]
+    },
+    {
+      "source_path": "profile_page/profile_page.graphql",
+      "operation_type": "query",
+      "operation_name": "userPublicProfile",
+      "query": "query userPublicProfile($username: String!) {\n  matchedUser(username: $username) {\n    contestBadge {\n      name\n      expired\n      hoverText\n      icon\n    }\n    username\n    githubUrl\n    twitterUrl\n    linkedinUrl\n    profile {\n      ranking\n      userAvatar\n      realName\n      aboutMe\n      school\n      websites\n      countryName\n      company\n      jobTitle\n      skillTags\n      postViewCount\n      postViewCountDiff\n      reputation\n      reputationDiff\n      solutionCount\n      solutionCountDiff\n      categoryDiscussCount\n      categoryDiscussCountDiff\n    }\n  }\n}",
+      "variables_examples": [
+        {
+          "username": "user8162l"
+        }
+      ]
+    },
+    {
+      "source_path": "profile_page/profile_page.graphql",
+      "operation_type": "query",
+      "operation_name": "languageStats",
+      "query": "query languageStats($username: String!) {\n  matchedUser(username: $username) {\n    languageProblemCount {\n      languageName\n      problemsSolved\n    }\n  }\n}",
+      "variables_examples": [
+        {
+          "username": "user8162l"
+        }
+      ]
+    },
+    {
+      "source_path": "profile_page/profile_page.graphql",
+      "operation_type": "query",
+      "operation_name": "skillStats",
+      "query": "query skillStats($username: String!) {\n  matchedUser(username: $username) {\n    tagProblemCounts {\n      advanced {\n        tagName\n        tagSlug\n        problemsSolved\n      }\n      intermediate {\n        tagName\n        tagSlug\n        problemsSolved\n      }\n      fundamental {\n        tagName\n        tagSlug\n        problemsSolved\n      }\n    }\n  }\n}",
+      "variables_examples": [
+        {
+          "username": "user8162l"
+        }
+      ]
+    },
+    {
+      "source_path": "profile_page/profile_page.graphql",
+      "operation_type": "query",
+      "operation_name": "userContestRankingInfo",
+      "query": "query userContestRankingInfo($username: String!) {\n  userContestRanking(username: $username) {\n    attendedContestsCount\n    rating\n    globalRanking\n    totalParticipants\n    topPercentage\n    badge {\n      name\n    }\n  }\n  userContestRankingHistory(username: $username) {\n    attended\n    trendDirection\n    problemsSolved\n    totalProblems\n    finishTimeInSeconds\n    rating\n    ranking\n    contest {\n      title\n      startTime\n    }\n  }\n}",
+      "variables_examples": [
+        {
+          "username": "user8162l"
+        }
+      ]
+    },
+    {
+      "source_path": "profile_page/profile_page.graphql",
+      "operation_type": "query",
+      "operation_name": "userProblemsSolved",
+      "query": "query userProblemsSolved($username: String!) {\n  allQuestionsCount {\n    difficulty\n    count\n  }\n  matchedUser(username: $username) {\n    problemsSolvedBeatsStats {\n      difficulty\n      percentage\n    }\n    submitStatsGlobal {\n      acSubmissionNum {\n        difficulty\n        count\n      }\n    }\n  }\n}",
+      "variables_examples": [
+        {
+          "username": "user8162l"
+        }
+      ]
+    },
+    {
+      "source_path": "profile_page/profile_page.graphql",
+      "operation_type": "query",
+      "operation_name": "userBadges",
+      "query": "query userBadges($username: String!) {\n  matchedUser(username: $username) {\n    badges {\n      id\n      name\n      shortName\n      displayName\n      icon\n      hoverText\n      medal {\n        slug\n        config {\n          iconGif\n          iconGifBackground\n        }\n      }\n      creationDate\n      category\n    }\n    upcomingBadges {\n      name\n      icon\n      progress\n    }\n  }\n}",
+      "variables_examples": [
+        {
+          "username": "user8162l"
+        }
+      ]
+    },
+    {
+      "source_path": "profile_page/profile_page.graphql",
+      "operation_type": "query",
+      "operation_name": "userProfileCalendar",
+      "query": "query userProfileCalendar($username: String!, $year: Int) {\n  matchedUser(username: $username) {\n    userCalendar(year: $year) {\n      activeYears\n      streak\n      totalActiveDays\n      dccBadges {\n        timestamp\n        badge {\n          name\n          icon\n        }\n      }\n      submissionCalendar\n    }\n  }\n}",
+      "variables_examples": [
+        {
+          "username": "user8162l"
+        }
+      ]
+    },
+    {
+      "source_path": "profile_page/profile_page.graphql",
+      "operation_type": "query",
+      "operation_name": "recentAcSubmissions",
+      "query": "query recentAcSubmissions($username: String!, $limit: Int!) {\n  recentAcSubmissionList(username: $username, limit: $limit) {\n    id\n    title\n    titleSlug\n    timestamp\n  }\n}",
+      "variables_examples": [
+        {
+          "username": "user8162l",
+          "limit": 15
+        }
+      ]
+    },
+    {
+      "source_path": "profile_page/profile_page.graphql",
+      "operation_type": "query",
+      "operation_name": "getUserProfile",
+      "query": "query getUserProfile($username: String!) {\n  matchedUser(username: $username) {\n    activeBadge {\n      displayName\n      icon\n    }\n  }\n}",
+      "variables_examples": [
+        {
+          "username": "user8162l"
+        }
+      ]
+    },
+    {
+      "source_path": "profile_page/profile_page.graphql",
+      "operation_type": "query",
+      "operation_name": "userProgressQuestionList",
+      "query": "query userProgressQuestionList($filters: UserProgressQuestionListInput) {\n  userProgressQuestionList(filters: $filters) {\n    totalNum\n    questions {\n      frontendId\n      title\n      difficulty\n      questionStatus\n    }\n  }\n}",
+      "variables_examples": [
+        {
+          "filters": {
+            "skip": 0,
+            "limit": 10000
+          }
+        }
+      ]
+    }
+  ]
+}

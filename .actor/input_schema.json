@@ -1,0 +1,85 @@
+{
+  "title": "LeetCode GraphQL Data Extractor Input",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "endpoint": {
+      "title": "GraphQL endpoint URL",
+      "type": "string",
+      "description": "LeetCode GraphQL endpoint to validate against.",
+      "editor": "textfield",
+      "prefill": "https://leetcode.com/graphql/"
+    },
+    "includeOperationNames": {
+      "title": "Include only these operation names",
+      "type": "array",
+      "description": "Optional list of operation names to run. Leave empty to run all.",
+      "editor": "stringList",
+      "prefill": []
+    },
+    "includeSourcePaths": {
+      "title": "Include only these source paths",
+      "type": "array",
+      "description": "Optional list of source paths to run (e.g. problem_solve_page/problem_solve_page.graphql).",
+      "editor": "stringList",
+      "prefill": []
+    },
+    "variablesOverrides": {
+      "title": "Variable Overrides (JSON object)",
+      "type": "object",
+      "description": "Object mapping operation names to custom variable objects. Useful for fetching details for a specific user or question.",
+      "editor": "json",
+      "prefill": {}
+    },
+    "includeOperationTypes": {
+      "title": "Include only operation types",
+      "type": "array",
+      "description": "Filter by operation types. Supported values: query, mutation.",
+      "editor": "stringList",
+      "prefill": []
+    },
+    "runAllVariableExamples": {
+      "title": "Run all variable examples per operation",
+      "type": "boolean",
+      "description": "If false, only the first variable example is used for each operation.",
+      "editor": "checkbox",
+      "prefill": false
+    },
+    "maxOperations": {
+      "title": "Maximum operations to run",
+      "type": "integer",
+      "description": "Optional hard cap for number of operations (0 means no limit).",
+      "editor": "number",
+      "prefill": 0
+    },
+    "requestDelayMs": {
+      "title": "Delay between requests (ms)",
+      "type": "integer",
+      "description": "Wait time between checks to reduce burst load.",
+      "editor": "number",
+      "prefill": 0
+    },
+    "requestTimeoutSec": {
+      "title": "Request timeout (seconds)",
+      "type": "integer",
+      "description": "HTTP timeout for each GraphQL request.",
+      "editor": "number",
+      "prefill": 30
+    },
+    "headers": {
+      "title": "Custom headers (JSON object)",
+      "type": "object",
+      "description": "Optional headers to merge into default request headers (e.g. Cookie, x-csrftoken).",
+      "editor": "json",
+      "prefill": {}
+    },
+    "failActorIfAnyFail": {
+      "title": "Fail actor when any operation fails",
+      "type": "boolean",
+      "description": "If true, actor exits with non-zero status when at least one operation fails.",
+      "editor": "checkbox",
+      "prefill": false
+    }
+  },
+  "required": []
+}
