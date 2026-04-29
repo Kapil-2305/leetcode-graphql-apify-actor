@@ -8,5 +8,6 @@
   "environmentVariables": {
     "APIFY_DEFAULT_DATASET_ID": "default",
     "APIFY_DEFAULT_KEY_VALUE_STORE_ID": "default"
-  }
+  },
+  "output": "./output_schema.json"
 }

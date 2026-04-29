@@ -1,0 +1,12 @@
+{
+  "actorOutputSchemaVersion": 1,
+  "title": "LeetCode GraphQL Data Extractor Output",
+  "properties": {
+    "results": {
+      "type": "string",
+      "title": "Extracted Data (Dataset)",
+      "description": "Contains the GraphQL data extracted from LeetCode.",
+      "template": "{{links.apiDefaultDatasetUrl}}/items"
+    }
+  }
+}

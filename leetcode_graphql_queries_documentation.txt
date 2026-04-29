@@ -2,7 +2,7 @@ LeetCode GraphQL Query Documentation (Curated + Live-Validated)
 
 Generated at (UTC): 2026-04-27T14:20:50.739973+00:00
 GraphQL endpoint: https://leetcode.com/graphql/
-Source corpus: github.com/akarsh1995/leetcode-graphql-queries (branch SHA: 85c80c8e8d255a9ed0eb9f1fdc0711331ef7daf8)
+
 
 Coverage summary:
 - Query documents collected: 75
