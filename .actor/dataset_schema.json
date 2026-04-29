@@ -1,0 +1,50 @@
+{
+  "title": "LeetCode Extractor Dataset",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "operationName": {
+      "title": "Operation Name",
+      "type": "string",
+      "description": "The name of the GraphQL operation executed."
+    },
+    "status": {
+      "title": "Status",
+      "type": "string",
+      "description": "Execution status (ok, request_failed, graphql_error)."
+    },
+    "httpStatus": {
+      "title": "HTTP Status",
+      "type": "integer",
+      "description": "The HTTP status code returned by the LeetCode API."
+    },
+    "durationMs": {
+      "title": "Duration (ms)",
+      "type": "integer",
+      "description": "Time taken to execute the query in milliseconds."
+    },
+    "data": {
+      "title": "Extracted Data",
+      "type": "object",
+      "description": "The actual JSON data extracted from LeetCode."
+    },
+    "variables": {
+      "title": "Variables Used",
+      "type": "object",
+      "description": "The GraphQL variables used for this operation."
+    },
+    "errorMessages": {
+      "title": "Error Messages",
+      "type": "array",
+      "description": "Any error messages returned during the operation.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "checkedAt": {
+      "title": "Checked At",
+      "type": "string",
+      "description": "Timestamp of when the query was executed."
+    }
+  }
+}
