@@ -6,39 +6,21 @@ import { fileURLToPath } from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
 const toObject = (value) => {
     if (!value || typeof value !== 'object' || Array.isArray(value)) return {};
     return value;
-};
-
-const normalizeVariableExamples = (examples) => {
-    if (!Array.isArray(examples) || examples.length === 0) return [{}];
-    return examples.map((item) => (item && typeof item === 'object' ? item : {}));
-};
-
-const toLowerSet = (list) => new Set((Array.isArray(list) ? list : []).map((item) => String(item).toLowerCase()));
-
-const chunk = (arr, size) => {
-    const out = [];
-    for (let i = 0; i < arr.length; i += size) out.push(arr.slice(i, i + size));
-    return out;
 };
 
 await Actor.main(async () => {
     const input = (await Actor.getInput()) ?? {};
 
     const endpoint = String(input.endpoint || 'https://leetcode.com/graphql/').trim();
-    const includeOperationNames = new Set(Array.isArray(input.includeOperationNames) ? input.includeOperationNames.map(String) : []);
-    const includeSourcePaths = new Set(Array.isArray(input.includeSourcePaths) ? input.includeSourcePaths.map(String) : []);
-    const includeOperationTypes = toLowerSet(input.includeOperationTypes);
-    const variablesOverrides = toObject(input.variablesOverrides);
-    const runAllVariableExamples = Boolean(input.runAllVariableExamples);
-    const maxOperations = Number(input.maxOperations || 0);
-    const requestDelayMs = Number(input.requestDelayMs || 0);
-    const requestTimeoutSec = Number(input.requestTimeoutSec || 30);
-    const failActorIfAnyFail = Boolean(input.failActorIfAnyFail);
+    const operationName = input.operationName;
+    const requestTimeoutSec = 30;
+
+    if (!operationName) {
+        throw new Error('You must provide an "operationName" in the input.');
+    }
 
     const defaultHeaders = {
         'Content-Type': 'application/json',
@@ -49,179 +31,107 @@ await Actor.main(async () => {
 
     const rawCatalog = await readFile(path.join(__dirname, 'queries.json'), 'utf8');
     const catalog = JSON.parse(rawCatalog);
-    let operations = Array.isArray(catalog.operations) ? catalog.operations : [];
+    const operations = Array.isArray(catalog.operations) ? catalog.operations : [];
 
-    if (includeOperationNames.size > 0) {
-        operations = operations.filter((op) => includeOperationNames.has(String(op.operation_name)));
-    }
-    if (includeSourcePaths.size > 0) {
-        operations = operations.filter((op) => includeSourcePaths.has(String(op.source_path)));
-    }
-    if (includeOperationTypes.size > 0) {
-        operations = operations.filter((op) => includeOperationTypes.has(String(op.operation_type || '').toLowerCase()));
-    }
-    if (maxOperations > 0) {
-        operations = operations.slice(0, maxOperations);
+    const operation = operations.find((op) => op.operation_name === operationName);
+    if (!operation) {
+        throw new Error(`Operation "${operationName}" not found in the queries catalog.`);
     }
 
-    if (operations.length === 0) {
-        const emptySummary = {
-            endpoint,
-            totalChecks: 0,
-            totalOperations: 0,
-            statusCounts: {},
-            message: 'No operations matched your filters.',
-            filters: {
-                includeOperationNames: [...includeOperationNames],
-                includeSourcePaths: [...includeSourcePaths],
-                includeOperationTypes: [...includeOperationTypes],
-                maxOperations,
-            },
-            checkedAt: new Date().toISOString(),
-        };
-        await Actor.setValue('VALIDATION_SUMMARY', emptySummary);
-        log.warning('No operations matched filters. Exiting without requests.');
-        return;
-    }
+    // Merge default variables with user-provided overrides
+    const defaultVariables = operation.variables_examples && operation.variables_examples.length > 0 
+        ? operation.variables_examples[0] 
+        : {};
+        
+    const variables = { ...defaultVariables, ...toObject(input.customVariables) };
+    
+    // Apply specific UI fields if they exist
+    if (input.username) variables.username = input.username;
+    if (input.titleSlug) variables.titleSlug = input.titleSlug;
+    if (typeof input.limit === 'number') variables.limit = input.limit;
+    if (typeof input.offset === 'number') variables.offset = input.offset;
 
-    const checks = [];
-    for (const op of operations) {
-        const override = variablesOverrides[op.operation_name];
-        const variableExamples = override ? [override] : normalizeVariableExamples(op.variables_examples);
-        const selectedExamples = (runAllVariableExamples && !override) ? variableExamples : [variableExamples[0]];
-        selectedExamples.forEach((variables, index) => {
-            checks.push({
-                sourcePath: op.source_path,
-                operationType: op.operation_type,
-                operationName: op.operation_name,
-                query: op.query,
-                variables,
-                variableExampleIndex: index,
-            });
+    log.info(`Executing ${operationName}...`, { variables });
+
+    const startedAt = Date.now();
+    const payload = {
+        operationName: operation.operation_name,
+        query: operation.query,
+        variables,
+    };
+
+    let status = 'ok';
+    let httpStatus = null;
+    let errorMessages = [];
+    let extractedData = null;
+
+    try {
+        const response = await fetch(endpoint, {
+            method: 'POST',
+            headers,
+            body: JSON.stringify(payload),
+            signal: AbortSignal.timeout(requestTimeoutSec * 1000),
         });
-    }
 
-    log.info(`Prepared ${checks.length} checks from ${operations.length} operations.`);
+        httpStatus = response.status;
+        const text = await response.text();
 
-    const results = [];
-    for (let i = 0; i < checks.length; i += 1) {
-        const check = checks[i];
-        const startedAt = Date.now();
-
-        const payload = {
-            operationName: check.operationName,
-            query: check.query,
-            variables: check.variables ?? {},
-        };
-
-        let status = 'ok';
-        let httpStatus = null;
-        let errorMessages = [];
-        let extractedData = null;
-        let responseErrors = [];
-
+        let body;
         try {
-            const response = await fetch(endpoint, {
-                method: 'POST',
-                headers,
-                body: JSON.stringify(payload),
-                signal: AbortSignal.timeout(requestTimeoutSec * 1000),
-            });
+            body = text ? JSON.parse(text) : {};
+        } catch {
+            body = { rawText: text };
+        }
 
-            httpStatus = response.status;
-            const text = await response.text();
-
-            let body;
-            try {
-                body = text ? JSON.parse(text) : {};
-            } catch {
-                body = { rawText: text };
-            }
-
-            if (!response.ok) {
-                status = 'request_failed';
-                errorMessages.push(`HTTP ${response.status}`);
-            }
-
-            if (Array.isArray(body?.errors) && body.errors.length > 0) {
-                status = response.ok ? 'graphql_error' : status;
-                responseErrors = body.errors.map((error) => error?.message || 'Unknown GraphQL error');
-                errorMessages.push(...responseErrors);
-            }
-
-            if (body?.data && typeof body.data === 'object') {
-                extractedData = body.data;
-            }
-        } catch (error) {
+        if (!response.ok) {
             status = 'request_failed';
-            errorMessages = [error?.message || String(error)];
+            errorMessages.push(`HTTP ${response.status}`);
         }
 
-        const durationMs = Date.now() - startedAt;
-        const result = {
-            checkNumber: i + 1,
-            sourcePath: check.sourcePath,
-            operationType: check.operationType,
-            operationName: check.operationName,
-            variableExampleIndex: check.variableExampleIndex,
-            variables: check.variables,
-            status,
-            httpStatus,
-            durationMs,
-            data: extractedData,
-            errorMessages,
-            checkedAt: new Date().toISOString(),
-        };
-        results.push(result);
-
-        const progress = `${i + 1}/${checks.length}`;
-        if (status === 'ok') {
-            log.info(`[${progress}] OK ${check.operationName} (${durationMs} ms)`);
-        } else {
-            log.warning(`[${progress}] ${status.toUpperCase()} ${check.operationName} (${durationMs} ms): ${errorMessages.join(' | ')}`);
+        if (Array.isArray(body?.errors) && body.errors.length > 0) {
+            status = response.ok ? 'graphql_error' : status;
+            const responseErrors = body.errors.map((err) => err?.message || 'Unknown GraphQL error');
+            errorMessages.push(...responseErrors);
         }
 
-        if (requestDelayMs > 0 && i < checks.length - 1) {
-            await sleep(requestDelayMs);
+        if (body?.data && typeof body.data === 'object') {
+            extractedData = body.data;
         }
+    } catch (error) {
+        status = 'request_failed';
+        errorMessages = [error?.message || String(error)];
     }
 
-    const statusCounts = results.reduce((acc, item) => {
-        acc[item.status] = (acc[item.status] || 0) + 1;
-        return acc;
-    }, {});
-
-    const summary = {
-        endpoint,
-        totalOperations: operations.length,
-        totalChecks: results.length,
-        statusCounts,
-        passedChecks: statusCounts.ok || 0,
-        failedChecks: results.length - (statusCounts.ok || 0),
-        filters: {
-            includeOperationNames: [...includeOperationNames],
-            includeSourcePaths: [...includeSourcePaths],
-            includeOperationTypes: [...includeOperationTypes],
-            maxOperations,
-            runAllVariableExamples,
-        },
-        requestConfig: {
-            requestDelayMs,
-            requestTimeoutSec,
-        },
+    const durationMs = Date.now() - startedAt;
+    
+    const result = {
+        operationType: operation.operation_type,
+        operationName: operation.operation_name,
+        variables,
+        status,
+        httpStatus,
+        durationMs,
+        data: extractedData,
+        errorMessages,
         checkedAt: new Date().toISOString(),
     };
 
-    for (const batch of chunk(results, 50)) {
-        await Actor.pushData(batch);
-    }
+    // Store the extracted data
+    await Actor.pushData(result);
 
-    await Actor.setValue('EXTRACTION_SUMMARY', summary);
-    await Actor.setValue('EXTRACTION_RESULTS', results);
+    // Save summary
+    await Actor.setValue('EXTRACTION_SUMMARY', {
+        endpoint,
+        operationName,
+        status,
+        durationMs,
+        checkedAt: result.checkedAt
+    });
 
-    log.info(`Completed. Summary: ${JSON.stringify(summary.statusCounts)}`);
-
-    if (failActorIfAnyFail && summary.failedChecks > 0) {
-        throw new Error(`Extraction failed: ${summary.failedChecks} checks failed.`);
+    if (status === 'ok') {
+        log.info(`Successfully extracted data for ${operationName} (${durationMs} ms)`);
+    } else {
+        log.error(`Extraction failed for ${operationName} (${durationMs} ms): ${errorMessages.join(' | ')}`);
+        throw new Error(`Extraction failed: ${errorMessages.join(' | ')}`);
     }
 });

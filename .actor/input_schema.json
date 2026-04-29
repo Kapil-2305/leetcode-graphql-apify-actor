@@ -3,83 +3,139 @@
   "type": "object",
   "schemaVersion": 1,
   "properties": {
-    "endpoint": {
-      "title": "GraphQL endpoint URL",
+    "operationName": {
+      "title": "Operation to Execute",
       "type": "string",
-      "description": "LeetCode GraphQL endpoint to validate against.",
+      "description": "Select the specific LeetCode GraphQL operation you want to run.",
+      "editor": "select",
+      "enum": [
+        "globalData",
+        "checkin",
+        "codingChallengeMedal",
+        "trendingDiscuss",
+        "getDidCompleteUpc",
+        "upcomingContests",
+        "studyPlanV2RecentCompletedProgress",
+        "tabsStatus",
+        "questionTitle",
+        "premiumQuestion",
+        "SimilarQuestions",
+        "singleQuestionTopicTags",
+        "userCanSeeQuestion",
+        "consolePanelConfig",
+        "questionEditorData",
+        "languageList",
+        "SurveyV2",
+        "qdFeatureGuide",
+        "annualReport",
+        "questionContent",
+        "qdChallengeQuestion",
+        "learningContextName",
+        "getStreakCounter",
+        "currentTimestamp",
+        "questionOfToday",
+        "questionHints",
+        "userQuestionStatus",
+        "userQuestionLike",
+        "userFavorites",
+        "questionStats",
+        "userQuestionAdminUrls",
+        "questionCompanyStats",
+        "discussionTopic",
+        "syncedCode",
+        "enableAiHelper",
+        "debuggerLanguageFeatures",
+        "editorialMeta",
+        "hasOfficialSolution",
+        "submissionList",
+        "submissionFilterTypes",
+        "questionNote",
+        "solutionTags",
+        "communitySolutions",
+        "officialSolution",
+        "learningContext",
+        "randomPanelQuestion",
+        "panelQuestionList",
+        "updateSyncedCode",
+        "questionSubmissionList",
+        "submissionDetails",
+        "communitySolution",
+        "solutionArticleInformation",
+        "prevNextSolution",
+        "intentionTags",
+        "questionDiscussComments",
+        "siteAnnouncements",
+        "GetProblemSetStudyPlanAds",
+        "problemsetQuestionList",
+        "GetMyStudyPlan",
+        "dailyCodingQuestionRecords",
+        "upcOnboardingStatus",
+        "timeTravelTicketInfo",
+        "userSessionProgress",
+        "userPublicProfile",
+        "languageStats",
+        "skillStats",
+        "userContestRankingInfo",
+        "userProblemsSolved",
+        "userBadges",
+        "userProfileCalendar",
+        "recentAcSubmissions",
+        "getUserProfile",
+        "userProgressQuestionList"
+      ],
+      "default": "questionTitle"
+    },
+    "username": {
+      "title": "Username",
+      "type": "string",
+      "description": "The LeetCode username (required for user profile queries).",
       "editor": "textfield",
-      "prefill": "https://leetcode.com/graphql/"
+      "prefill": "user8162l"
     },
-    "includeOperationNames": {
-      "title": "Include only these operation names",
-      "type": "array",
-      "description": "Optional list of operation names to run. Leave empty to run all.",
-      "editor": "stringList",
-      "prefill": []
+    "titleSlug": {
+      "title": "Question Slug",
+      "type": "string",
+      "description": "The slug of the question (e.g. 'two-sum' or '3sum').",
+      "editor": "textfield",
+      "prefill": "two-sum"
     },
-    "includeSourcePaths": {
-      "title": "Include only these source paths",
-      "type": "array",
-      "description": "Optional list of source paths to run (e.g. problem_solve_page/problem_solve_page.graphql).",
-      "editor": "stringList",
-      "prefill": []
+    "limit": {
+      "title": "Limit",
+      "type": "integer",
+      "description": "Number of results to return (used for lists like submissions).",
+      "editor": "number",
+      "prefill": 20
     },
-    "variablesOverrides": {
-      "title": "Variable Overrides (JSON object)",
+    "offset": {
+      "title": "Offset",
+      "type": "integer",
+      "description": "Starting index for pagination.",
+      "editor": "number",
+      "prefill": 0
+    },
+    "customVariables": {
+      "title": "Custom Variables (JSON)",
       "type": "object",
-      "description": "Object mapping operation names to custom variable objects. Useful for fetching details for a specific user or question.",
+      "description": "Any additional variables needed by the selected query in JSON format (e.g. {\"year\": 2023, \"month\": 7}).",
       "editor": "json",
       "prefill": {}
     },
-    "includeOperationTypes": {
-      "title": "Include only operation types",
-      "type": "array",
-      "description": "Filter by operation types. Supported values: query, mutation.",
-      "editor": "stringList",
-      "prefill": []
-    },
-    "runAllVariableExamples": {
-      "title": "Run all variable examples per operation",
-      "type": "boolean",
-      "description": "If false, only the first variable example is used for each operation.",
-      "editor": "checkbox",
-      "prefill": false
-    },
-    "maxOperations": {
-      "title": "Maximum operations to run",
-      "type": "integer",
-      "description": "Optional hard cap for number of operations (0 means no limit).",
-      "editor": "number",
-      "prefill": 0
-    },
-    "requestDelayMs": {
-      "title": "Delay between requests (ms)",
-      "type": "integer",
-      "description": "Wait time between checks to reduce burst load.",
-      "editor": "number",
-      "prefill": 0
-    },
-    "requestTimeoutSec": {
-      "title": "Request timeout (seconds)",
-      "type": "integer",
-      "description": "HTTP timeout for each GraphQL request.",
-      "editor": "number",
-      "prefill": 30
+    "endpoint": {
+      "title": "GraphQL endpoint URL",
+      "type": "string",
+      "description": "LeetCode GraphQL endpoint.",
+      "editor": "textfield",
+      "prefill": "https://leetcode.com/graphql/"
     },
     "headers": {
       "title": "Custom headers (JSON object)",
       "type": "object",
-      "description": "Optional headers to merge into default request headers (e.g. Cookie, x-csrftoken).",
+      "description": "Optional headers (like Cookie, x-csrftoken) needed for private mutations.",
       "editor": "json",
       "prefill": {}
-    },
-    "failActorIfAnyFail": {
-      "title": "Fail actor when any operation fails",
-      "type": "boolean",
-      "description": "If true, actor exits with non-zero status when at least one operation fails.",
-      "editor": "checkbox",
-      "prefill": false
     }
   },
-  "required": []
+  "required": [
+    "operationName"
+  ]
 }

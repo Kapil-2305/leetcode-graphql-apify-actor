@@ -1,51 +1,47 @@
 # LeetCode GraphQL Data Extractor (Apify Actor)
 
-This actor runs a catalog of LeetCode GraphQL operations against `https://leetcode.com/graphql/` and extracts data directly into an Apify dataset.
+This Apify actor extracts data from LeetCode by running targeted GraphQL queries directly against the `https://leetcode.com/graphql/` endpoint.
 
 ## What it does
-- Loads over 70+ GraphQL operations from `src/queries.json`.
-- Sends GraphQL requests to extract detailed information such as question metadata, user public profiles, language stats, active daily coding challenges, and more.
-- Captures HTTP status, GraphQL errors, timing, and the actual extracted data.
-- Stores:
-  - Dataset items (one result per query executed containing the `data` payload)
-  - `EXTRACTION_SUMMARY` in key-value store
-  - `EXTRACTION_RESULTS` in key-value store
+- Includes a catalog of over 70+ LeetCode GraphQL operations (from user profiles to question details).
+- Allows you to select **exactly which query** you want to run from a dropdown.
+- Accepts specific input parameters (like `username` or `titleSlug`) to customize the query.
+- Extracts the exact data requested and saves the raw JSON payload to the Apify dataset.
 
-## Local run
+## How to use
+
+1. **Select an Operation**: Choose the query you want to execute (e.g., `userPublicProfile`, `questionTitle`, `submissionList`).
+2. **Provide Variables**: Provide the corresponding inputs for that query.
+   - Example 1: If querying `userPublicProfile`, enter a valid LeetCode `username`.
+   - Example 2: If querying `questionTitle`, enter the `titleSlug` (e.g., `two-sum`).
+3. **Run the Actor**: The actor will fetch the data and push it into the dataset.
+
+## Local Development
 1. Install dependencies:
    - `npm install`
-2. Run with defaults:
+2. Configure your inputs in `storage/key_value_stores/default/INPUT.json`.
+3. Run the actor:
    - `npm start`
-3. Optional: Provide actor input via `INPUT.json` in the project root to control exactly which data to extract.
 
-## Input highlights
-- `includeOperationNames`: An array of specific operations to run. If not provided, all 75+ queries will be executed.
-- `variablesOverrides`: An object allowing you to override the default variables for specific operations. This is useful for passing your own username or a specific question slug.
-- `includeSourcePaths`: Run a specific source group only.
-- `runAllVariableExamples`: Run all examples per operation instead of just the first one.
-- `headers`: Inject auth/csrf headers for protected mutations or restricted data.
-
-## Example `INPUT.json`
-To extract the title and details of the question "3sum" and the profile of a user:
-
+### Example `INPUT.json`
+To extract the profile of a specific user:
 ```json
 {
-  "includeOperationNames": [
-    "questionTitle",
-    "userPublicProfile"
-  ],
-  "variablesOverrides": {
-    "questionTitle": {
-      "titleSlug": "3sum"
-    },
-    "userPublicProfile": {
-      "username": "your_username_here"
-    }
-  }
+  "operationName": "userPublicProfile",
+  "username": "kapil-2305"
+}
+```
+
+To extract a question's details:
+```json
+{
+  "operationName": "questionTitle",
+  "titleSlug": "two-sum"
 }
 ```
 
 ## Output
-- **Dataset**: One item per operation check with the full extracted payload stored in the `data` property.
-- **`EXTRACTION_SUMMARY`**: Overall counts and filters used.
-- **`EXTRACTION_RESULTS`**: Full result list.
+The result is pushed to the default dataset and includes:
+- The `operationName` and `variables` used.
+- The `data` property containing the raw JSON response from LeetCode.
+- Execution status and timings.
